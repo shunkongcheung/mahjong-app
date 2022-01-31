@@ -97,7 +97,7 @@ interface Score {
 // scores just by looking at tiles
 export const TileScore: Score = {
   CommonHand: [1, "平糊"],
-  AllTriplets: [3, "對對糊"],
+  AllInTriplets: [3, "對對糊"],
   MixedOneSuite: [3, "混一色"],
   AllOneSuit: [7, "清一色"],
   AllHonors: [10, "字一色"],
