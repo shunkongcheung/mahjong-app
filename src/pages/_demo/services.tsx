@@ -115,7 +115,11 @@ const ServicesDemo: NextPage = () => {
             options: [
               {
                 name: "Score",
-                call: () => getTileScore(tiles),
+                call: () =>
+                  getTileScore(tiles, [
+                    constants.Wind.East,
+                    constants.Wind.West,
+                  ]),
               },
             ],
           },
