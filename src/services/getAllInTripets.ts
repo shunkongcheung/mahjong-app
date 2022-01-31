@@ -12,6 +12,12 @@ const getCommonHandScore = (
     true
   );
 
+  const isOrphansOnly = iCopy.reduce((acc, curr) => {
+    if (!acc) return false;
+    const currNum = Number(curr.split(".")[1]);
+    return currNum === 1 || currNum === 9;
+  }, true);
+
   // get all pairs, they are potential eys
   const paired: Array<constants.TileType> = [];
   for (let idx = 0; idx < iCopy.length - 1; idx++) {
@@ -46,10 +52,11 @@ const getCommonHandScore = (
     }
 
     // check if it is successful
-    if (!failed)
-      return isAllHonor
-        ? constants.TileScore.AllHonorTiles
-        : constants.TileScore.AllInTriplets;
+    if (!failed) {
+      if (isAllHonor) return constants.TileScore.AllHonorTiles;
+      if (isOrphansOnly) return constants.TileScore.Orphans;
+      return constants.TileScore.AllInTriplets;
+    }
   }
 
   // tried all eyes and still failed
