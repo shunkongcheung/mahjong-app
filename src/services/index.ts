@@ -1,3 +1,4 @@
+import getInitialGame from "./getInitialGame";
 import getInitialTiles from "./getInitialTiles";
 
-export { getInitialTiles };
+export { getInitialGame, getInitialTiles };
