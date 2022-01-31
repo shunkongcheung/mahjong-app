@@ -7,6 +7,11 @@ const getCommonHandScore = (
 ): constants.ScoreTuple => {
   const iCopy = [...tiles].sort();
 
+  const isAllHonor = iCopy.reduce(
+    (acc, curr) => acc && !getIsSuited(curr),
+    true
+  );
+
   // get all pairs, they are potential eys
   const paired: Array<constants.TileType> = [];
   for (let idx = 0; idx < iCopy.length - 1; idx++) {
@@ -32,32 +37,19 @@ const getCommonHandScore = (
     while (copy.length > 2 && !failed) {
       let curr = copy[0];
 
-      // if it is not suited, it is not common handed
-      if (!getIsSuited(curr)) {
+      // check if the next and second next is the same
+      if (curr === copy[1] && curr === copy[2]) {
+        copy.splice(0, 3);
+      } else {
         failed = true;
       }
-
-      // remove current item
-      copy.splice(0, 1);
-
-      // find the other two
-      const secondIdx = copy.findIndex((itm) => itm === curr);
-      if (secondIdx < 0) {
-        failed = true;
-        continue;
-      }
-      copy.splice(secondIdx, 1);
-
-      const thirdIdx = copy.findIndex((itm) => itm === curr);
-      if (thirdIdx < 0) {
-        failed = true;
-        continue;
-      }
-      copy.splice(thirdIdx, 1);
     }
 
     // check if it is successful
-    if (!failed) return constants.TileScore.AllInTriplets;
+    if (!failed)
+      return isAllHonor
+        ? constants.TileScore.AllHonorTiles
+        : constants.TileScore.AllInTriplets;
   }
 
   // tried all eyes and still failed
