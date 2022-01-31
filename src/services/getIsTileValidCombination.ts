@@ -1,6 +1,9 @@
 import { TileType } from "../constants";
 
-const getIsTileValidCombination = (tiles: Array<TileType>): boolean => {
+const getIsTileValidCombination = (
+  tiles: Array<TileType>,
+  isKongable = false
+): boolean => {
   // has to be at least 3 tiles
   if (!tiles.length) return true;
   if (tiles.length < 3) return false;
@@ -14,6 +17,19 @@ const getIsTileValidCombination = (tiles: Array<TileType>): boolean => {
   if (curr === tiles[1] && curr === tiles[2]) {
     const copy = [...tiles];
     copy.splice(0, 3);
+    if (getIsTileValidCombination(copy)) return true;
+  }
+
+  // try forming kong
+  if (
+    isKongable &&
+    tiles.length >= 4 &&
+    curr === tiles[1] &&
+    curr === tiles[2] &&
+    curr === tiles[3]
+  ) {
+    const copy = [...tiles];
+    copy.splice(0, 4);
     if (getIsTileValidCombination(copy)) return true;
   }
 
