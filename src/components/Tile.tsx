@@ -26,7 +26,7 @@ const TileImage = styled.div<{ offsetX: number; offsetY: number }>`
   right: 0;
 
   background: url(/mahjong-tiles.jpg) ${({ offsetX }) => 12.5 * offsetX}%
-    ${({ offsetY }) => offsetY * 25}% / 1000% 500%;
+    ${({ offsetY }) => offsetY * 25}% / 1000% 540%;
 `;
 
 const Tile: React.FC<TileProps> = ({ width, type }) => {
@@ -53,7 +53,6 @@ const Tile: React.FC<TileProps> = ({ width, type }) => {
     }
   }, [groupName]);
 
-  console.log({ type: type.split(".") });
   return (
     <Container width={width}>
       <TileImage offsetX={offsetX} offsetY={offsetY} />
