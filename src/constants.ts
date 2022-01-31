@@ -121,5 +121,6 @@ export const ConditionScore: Score = {
   Heaven: [40, "天糊"],
   Earth: [20, "地糊"],
   Flower: [1, "花"],
+  Dragon: [1, "番子"],
   Wind: [1, "風"],
 };
