@@ -104,7 +104,7 @@ export const TileScore: Score = {
   SmallDragons: [5, "小三元"],
   GreatDragons: [8, "大三元"],
   SmallWinds: [6, "小四喜"], // shall be added with mixed one suit / all honors
-  GreatWinds: [13, "大四喜"],
+  GreatWinds: [10, "大四喜"],
   ThirteenOrphans: [13, "十三么"],
   AllKongs: [13, "十八羅漢"],
   Orphans: [10, "么九"],
