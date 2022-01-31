@@ -86,3 +86,40 @@ export interface Game {
   remaining: Array<TileType>;
   onTable: Array<TileType>;
 }
+
+// scoring values and name
+export type ScoreTuple = [number, string];
+
+interface Score {
+  [x: string]: ScoreTuple;
+}
+
+// scores just by looking at tiles
+export const TileScore: Score = {
+  CommonHand: [1, "平糊"],
+  AllTriplets: [3, "對對糊"],
+  MixedOneSuite: [3, "混一色"],
+  AllOneSuit: [7, "清一色"],
+  AllHonors: [10, "字一色"],
+  SmallDragons: [4, "小三元"],
+  GreatDragons: [8, "大三元"],
+  SmallWinds: [6, "小四喜"], // shall be added with mixed one suit / all honors
+  GreatWinds: [13, "大四喜"],
+  ThirteenOrphans: [13, "十三么"],
+  AllKongs: [13, "十八羅漢"],
+  Orphans: [10, "么九"],
+};
+
+// conditional scores based on the way the player is winning
+export const ConditionScore: Score = {
+  SelfPick: [1, "自摸"],
+  WindFromWall: [1, "門前清"],
+  RobbingKong: [1, "搶槓"],
+  WindByLastCatch: [1, "海底撈月"],
+  WinByKong: [1, "槓上開花"], // shall be adding with 1 by SelfPick
+  WinByDoubleKong: [8, "槓上槓"], // shall be adding with 1 by SelfPick
+  Heaven: [13, "天糊"],
+  Earth: [13, "地糊"],
+  Flower: [1, "花"],
+  Wind: [1, "風"],
+};
