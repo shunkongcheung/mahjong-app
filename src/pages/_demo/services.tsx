@@ -2,41 +2,35 @@ import { NextPage } from "next";
 import React from "react";
 import styled from "styled-components";
 
-import { getInitialTiles } from "../../services";
+import { getInitialGame ,getInitialTiles } from "../../services";
 
 interface DemoSetProps {
-  set: Array<{ name: string; call: () => any }>;
+  set: Array<{
+    name: string;
+    options: Array<{ name: string; call: () => any }>;
+  }>;
 }
 
-const Button = styled.button`
-  background: ${({ theme }) => theme.colors.primary[400]};
-  border: 0;
-  border-radius: 5px;
-  padding: 10px 20px;
-  color: white;
-`;
+const Container = styled.div``;
 
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-`;
-
-const Row = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  width: 100%;
-`;
+const Select = styled.select``;
 
 const DemoSet: React.FC<DemoSetProps> = ({ set }) => (
-  <Row>
-    {set.map(({ name, call }, idx) => (
-      <Button key={`${name}-${idx}`} onClick={() => console.log(call())}>
-        {name}
-      </Button>
+  <Select>
+    {set.map(({ name, options }, idx) => (
+      <optgroup label={name} key={`${name}-${idx}`}>
+        {options.map(({ name, call }, jdx) => (
+          <option
+            value={name}
+            key={`${name}-${idx}-${jdx}`}
+            onClick={() => console.log(call())}
+          >
+            {name}
+          </option>
+        ))}
+      </optgroup>
     ))}
-  </Row>
+  </Select>
 );
 
 const ServicesDemo: NextPage = () => {
@@ -46,11 +40,25 @@ const ServicesDemo: NextPage = () => {
         set={[
           {
             name: "Initial Tiles",
-            call: () => getInitialTiles(false),
+            options: [
+              {
+                name: "ordered tiles",
+                call: () => getInitialTiles(false),
+              },
+              {
+                name: "random tiles",
+                call: () => getInitialTiles(),
+              },
+            ],
           },
           {
-            name: "Initial Tiles (random)",
-            call: () => getInitialTiles(),
+            name: "Game State",
+            options: [
+              {
+                name: "initial game",
+                call: () => getInitialGame(),
+              },
+            ],
           },
         ]}
       />
