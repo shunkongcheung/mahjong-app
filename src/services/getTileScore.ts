@@ -2,17 +2,19 @@ import { ScoreTuple, TileType } from "../constants";
 
 import getAllInTripets from "./getAllInTripets";
 import getCommonHandScore from "./getCommanHandScore";
+import getDragonTilesScore from "./getDragonTilesScore";
 import getThirteenOrphansScore from "./getThirteenOrphansScore";
 import getOneMixSuitScore from "./getOneMixSuitScore";
-import getSmallGreatDragonsScore from "./getSmallGreatDragonsScore";
+import getWindTilesScore from "./getWindTilesScore";
 
 const getTileScore = (tiles: Array<TileType>): Array<ScoreTuple> => {
   const checkers = [
     getAllInTripets,
     getCommonHandScore,
+    getDragonTilesScore,
     getThirteenOrphansScore,
     getOneMixSuitScore,
-    getSmallGreatDragonsScore,
+    getWindTilesScore,
   ];
 
   const hands = checkers.map((checker) => checker(tiles));
