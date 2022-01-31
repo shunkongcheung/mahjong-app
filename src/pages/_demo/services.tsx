@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { Tile } from "../../components";
 import * as constants from "../../constants";
-import { getInitialGame, getInitialTiles } from "../../services";
+import { getInitialGame, getInitialTiles, getTileScore } from "../../services";
 
 interface DemoSetProps {
   set: Array<{
@@ -66,7 +66,7 @@ const ServicesDemo: NextPage = () => {
   const handleAddTile = useCallback(
     (tile: constants.TileType) => {
       setTiles((o) => {
-        if (o.length >= 13) return o;
+        if (o.length >= 14) return o;
         return [...o, tile].sort();
       });
     },
@@ -107,6 +107,15 @@ const ServicesDemo: NextPage = () => {
               {
                 name: "initial game",
                 call: () => getInitialGame(),
+              },
+            ],
+          },
+          {
+            name: "Tile Score",
+            options: [
+              {
+                name: "Score",
+                call: () => getTileScore(tiles),
               },
             ],
           },
