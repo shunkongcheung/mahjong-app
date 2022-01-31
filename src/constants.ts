@@ -1,3 +1,4 @@
+// tile types
 export enum Bamboo {
   One = "bamboo.1",
   Two = "bamboo.2",
@@ -69,3 +70,19 @@ export type TileType =
   | Dragon
   | Flower
   | Season;
+
+// game status
+export interface Player {
+  isStarter: boolean;
+  flowers: Array<Flower | Season>;
+  onHand: Array<TileType>;
+  committed: Array<Array<TileType>>;
+}
+
+export interface Game {
+  wind: Wind;
+  turn: Player;
+  players: Array<Player>;
+  remaining: Array<TileType>;
+  onTable: Array<TileType>;
+}
