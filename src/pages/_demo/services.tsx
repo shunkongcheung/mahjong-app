@@ -46,22 +46,10 @@ const DemoSet: React.FC<DemoSetProps> = ({ set }) => (
 );
 
 const ServicesDemo: NextPage = () => {
-  const [tiles, setTiles] = useState<Array<constants.TileType>>([
-    constants.Bamboo.One,
-    constants.Bamboo.Nine,
-    constants.Character.One,
-    constants.Character.Nine,
-    constants.Dot.One,
-    constants.Dot.Nine,
-    constants.Dragon.Green,
-    constants.Dragon.Red,
-    constants.Dragon.White,
-    constants.Wind.East,
-    constants.Wind.South,
-    constants.Wind.West,
-    constants.Wind.North,
-    constants.Wind.North,
-  ]);
+  const [tiles, setTiles] = useState<Array<constants.TileType>>([]);
+  const [committed, setCommitted] = useState<Array<Array<constants.TileType>>>(
+    []
+  );
 
   const handleAddTile = useCallback(
     (tile: constants.TileType) => {
@@ -82,6 +70,24 @@ const ServicesDemo: NextPage = () => {
       });
     },
     [setTiles]
+  );
+
+  const handleCommit = useCallback(() => {
+    setCommitted((o) => {
+      return [tiles, ...o];
+    });
+    setTiles([]);
+  }, [setCommitted, setTiles, tiles]);
+
+  const handleRemoveCommit = useCallback(
+    (idx: number) => {
+      setCommitted((o) => {
+        const temp = [...o];
+        temp.splice(idx, 1);
+        return [...temp].sort();
+      });
+    },
+    [setCommitted]
   );
 
   return (
@@ -116,7 +122,7 @@ const ServicesDemo: NextPage = () => {
               {
                 name: "Score",
                 call: () =>
-                  getTileScore(tiles, [
+                  getTileScore(tiles, committed, [
                     constants.Wind.East,
                     constants.Wind.West,
                   ]),
@@ -126,7 +132,20 @@ const ServicesDemo: NextPage = () => {
         ]}
       />
       <Divider />
+      {committed.map((tiles, idx) => (
+        <Row key={`Row-${idx}`}>
+          <button onClick={() => handleRemoveCommit(idx)}>remove</button>
+          {tiles.map((tile, jdx) => (
+            <Tile
+              type={tile}
+              width={70}
+              key={`CommitedTile-${idx}-${tile}-${jdx}`}
+            />
+          ))}
+        </Row>
+      ))}
       <Row>
+        <button onClick={handleCommit}>commit</button>
         {tiles.map((tile, idx) => (
           <div
             onMouseDown={() => handleRemoveTile(idx)}
