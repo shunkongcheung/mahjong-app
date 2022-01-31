@@ -6,10 +6,12 @@ import getDragonTilesScore from "./getDragonTilesScore";
 import getThirteenOrphansScore from "./getThirteenOrphansScore";
 import getOneMixSuitScore from "./getOneMixSuitScore";
 import getWindTilesScore from "./getWindTilesScore";
+import getAllKongsScore from "./getAllKongsScore";
 
 const getTileScore = (tiles: Array<TileType>): Array<ScoreTuple> => {
   const checkers = [
     getAllInTripets,
+    getAllKongsScore,
     getCommonHandScore,
     getDragonTilesScore,
     getThirteenOrphansScore,
