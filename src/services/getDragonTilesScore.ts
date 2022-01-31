@@ -2,8 +2,17 @@ import * as constants from "../constants";
 import getIsTileValidCombination from "./getIsTileValidCombination";
 
 const getDragonTilesScore = (
-  tiles: Array<constants.TileType>
+  tiles: Array<constants.TileType>,
+  committed: Array<Array<constants.TileType>>
 ): constants.ScoreTuple => {
+  // check all committed are valid
+  const isCommittedValid = committed.reduce(
+    (acc, tiles) => acc && getIsTileValidCombination([...tiles], true),
+    true
+  );
+
+  if (!isCommittedValid) return [0, ""];
+
   const iCopy = [...tiles].sort();
 
   const dragons: Array<constants.TileType> = Object.values(constants.Dragon);
@@ -16,7 +25,14 @@ const getDragonTilesScore = (
   // loop all eyes
   for (let idx = 0; idx < paired.length; idx++) {
     // make a new copy for testing
-    const copy = [...tiles].sort();
+    // as long as they committed are valid, they can just added to for testing
+    // only provide the first three items (even if it is a kong)
+    let copy = [...tiles];
+    committed.map((committedTiles) => {
+      copy = [...copy, ...committedTiles.slice(0, 3)];
+    });
+    copy.sort();
+
     const toRemove = paired[idx];
 
     // is eyed
