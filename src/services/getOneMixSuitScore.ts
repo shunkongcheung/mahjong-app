@@ -45,6 +45,9 @@ const getOneMixSuitScore = (
 ): constants.ScoreTuple => {
   const iCopy = [...tiles].sort();
 
+  // must contain at least one suit to be all one suit / mixed suit
+  if (!getIsSuited(tiles[0])) return [0, ""];
+
   // check if it is one suit / mixed suit. if not return false
   let isMixed = false;
   const suitName = iCopy[0].split(".")[0];
