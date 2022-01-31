@@ -61,7 +61,7 @@ export enum Season {
   North = "season.8",
 }
 
-export type TileSet =
+export type TileType =
   | Bamboo
   | Character
   | Dot

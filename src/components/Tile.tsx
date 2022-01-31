@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
-import { TileSet } from "../constants";
+import { TileType } from "../constants";
 
 interface TileProps {
-  type: TileSet;
+  type: TileType;
   width: number | string;
 }
 
