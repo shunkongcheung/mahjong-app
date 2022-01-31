@@ -46,7 +46,22 @@ const DemoSet: React.FC<DemoSetProps> = ({ set }) => (
 );
 
 const ServicesDemo: NextPage = () => {
-  const [tiles, setTiles] = useState<Array<constants.TileType>>([]);
+  const [tiles, setTiles] = useState<Array<constants.TileType>>([
+    constants.Bamboo.One,
+    constants.Bamboo.Nine,
+    constants.Character.One,
+    constants.Character.Nine,
+    constants.Dot.One,
+    constants.Dot.Nine,
+    constants.Dragon.Green,
+    constants.Dragon.Red,
+    constants.Dragon.White,
+    constants.Wind.East,
+    constants.Wind.South,
+    constants.Wind.West,
+    constants.Wind.North,
+    constants.Wind.North,
+  ]);
 
   const handleAddTile = useCallback(
     (tile: constants.TileType) => {
