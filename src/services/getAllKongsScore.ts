@@ -1,7 +1,13 @@
 import { ScoreTuple, TileScore, TileType } from "../constants";
 
-const getAllKongsScore = (tiles: Array<TileType>): ScoreTuple => {
+const getAllKongsScore = (
+  tiles: Array<TileType>,
+  committed: Array<Array<TileType>>
+): ScoreTuple => {
   const iCopy = [...tiles].sort();
+
+  // if there are any committed, it cant be kongs
+  if (committed.length > 0) return [0, ""];
 
   // get all pairs, they are potential eys
   const paired: Array<TileType> = [];
