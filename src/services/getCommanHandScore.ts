@@ -3,9 +3,29 @@ import * as constants from "../constants";
 import getIsSuited from "./getIsSuited";
 
 const getCommonHandScore = (
-  tiles: Array<constants.TileType>
+  tiles: Array<constants.TileType>,
+  committed: Array<Array<constants.TileType>>
 ): constants.ScoreTuple => {
   const iCopy = [...tiles].sort();
+
+  // check the committed
+  const isCommittedCommanHand = committed.reduce((acc, iTiles) => {
+    if (!acc) return false;
+
+    // possibly a Kong, which make it impossible to be command hand
+    if (iTiles.length !== 3) return false;
+
+    const tiles = [...iTiles].sort();
+
+    if (!getIsSuited(tiles[0])) return false;
+
+    const [currSuit, currIdx] = tiles[0].split(".");
+    for (let idx = 1; idx < 3; idx++)
+      if (tiles[idx] != `${currSuit}.${Number(currIdx) + idx}`) return false;
+
+    return true;
+  }, true);
+  if (!isCommittedCommanHand) return [0, ""];
 
   // get all pairs, they are potential eys
   const paired: Array<constants.TileType> = [];
