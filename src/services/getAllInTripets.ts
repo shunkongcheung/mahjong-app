@@ -2,21 +2,40 @@ import * as constants from "../constants";
 
 import getIsSuited from "./getIsSuited";
 
-const getCommonHandScore = (
-  tiles: Array<constants.TileType>
+const getAllInTripets = (
+  tiles: Array<constants.TileType>,
+  committed: Array<Array<constants.TileType>>
 ): constants.ScoreTuple => {
   const iCopy = [...tiles].sort();
 
-  const isAllHonor = iCopy.reduce(
-    (acc, curr) => acc && !getIsSuited(curr),
-    true
-  );
+  // look for all honor
+  let isAllHonor = iCopy.reduce((acc, curr) => acc && !getIsSuited(curr), true);
 
-  const isOrphansOnly = iCopy.reduce((acc, curr) => {
+  // look for orphans only
+  let isOrphansOnly = iCopy.reduce((acc, curr) => {
     if (!acc) return false;
     const currNum = Number(curr.split(".")[1]);
     return currNum === 1 || currNum === 9;
   }, true);
+
+  // check all committed
+  const isCommittedInTriplets = committed.reduce((acc, tiles) => {
+    if (!acc) return false;
+
+    // check that its all in triplets
+    for (let idx = 1; idx < tiles.length; idx++)
+      if (tiles[idx] !== tiles[0]) return false;
+
+    // check for isAllHonor and isOrphansOnly
+    if (getIsSuited(tiles[0])) isAllHonor = false;
+
+    const currNum = Number(tiles[0].split(".")[1]);
+    if (currNum !== 1 && currNum == 9) isOrphansOnly = false;
+
+    return true;
+  }, true);
+
+  if (!isCommittedInTriplets) return [0, ""];
 
   // get all pairs, they are potential eys
   const paired: Array<constants.TileType> = [];
@@ -63,4 +82,4 @@ const getCommonHandScore = (
   return [0, ""];
 };
 
-export default getCommonHandScore;
+export default getAllInTripets;
