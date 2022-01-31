@@ -106,7 +106,7 @@ export const TileScore: Score = {
   SmallWinds: [6, "小四喜"], // shall be added with mixed one suit / all honors
   GreatWinds: [10, "大四喜"],
   ThirteenOrphans: [13, "十三么"],
-  AllKongs: [13, "十八羅漢"],
+  AllKongs: [18, "十八羅漢"],
   Orphans: [10, "么九"],
 };
 
@@ -118,8 +118,8 @@ export const ConditionScore: Score = {
   WindByLastCatch: [1, "海底撈月"],
   WinByKong: [1, "槓上開花"], // shall be adding with 1 by SelfPick
   WinByDoubleKong: [8, "槓上槓"], // shall be adding with 1 by SelfPick
-  Heaven: [13, "天糊"],
-  Earth: [13, "地糊"],
+  Heaven: [40, "天糊"],
+  Earth: [20, "地糊"],
   Flower: [1, "花"],
   Wind: [1, "風"],
 };
