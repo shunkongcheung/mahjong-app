@@ -7,7 +7,7 @@ import {
   Wind,
 } from "../constants";
 
-import getAllInTripets from "./getAllInTripets";
+import getAllInTripetsScore from "./getAllInTripetsScore";
 import getCommonHandScore from "./getCommanHandScore";
 import getDragonTilesScore from "./getDragonTilesScore";
 import getThirteenOrphansScore from "./getThirteenOrphansScore";
@@ -37,7 +37,7 @@ const getTileScore = (
   winds: Array<Wind>
 ): Array<ScoreTuple> => {
   const checkers = [
-    getAllInTripets,
+    getAllInTripetsScore,
     getAllKongsScore,
     getCommonHandScore,
     getDragonTilesScore,

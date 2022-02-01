@@ -2,7 +2,7 @@ import * as constants from "../constants";
 
 import getIsSuited from "./getIsSuited";
 
-const getAllInTripets = (
+const getAllInTripetsScore = (
   tiles: Array<constants.TileType>,
   committed: Array<Array<constants.TileType>>
 ): constants.ScoreTuple => {
@@ -82,4 +82,4 @@ const getAllInTripets = (
   return [0, ""];
 };
 
-export default getAllInTripets;
+export default getAllInTripetsScore;
