@@ -1,6 +1,7 @@
 import { TileType } from "../constants";
 
 import getAllHonorTilesFeasibility from "./getAllHonorTilesFeasibility";
+import getDragonsFeasibility from "./getDragonsFeasibility";
 import getThirteenOrphansFeasibility from "./getThirteenOrphansFeasibility";
 import getTripletsFeasibility from "./getTripletsFeasibility";
 
@@ -14,6 +15,7 @@ const getFeasibility = (
     committed,
     remains
   );
+  const dragonTiles = getDragonsFeasibility(onHands, committed, remains);
   const thirteenOrphans = getThirteenOrphansFeasibility(
     onHands,
     committed,
@@ -21,7 +23,7 @@ const getFeasibility = (
   );
   const triplets = getTripletsFeasibility(onHands, committed, remains);
 
-  return { allHonorTiles, thirteenOrphans, triplets };
+  return { allHonorTiles, dragonTiles, thirteenOrphans, triplets };
 };
 
 export default getFeasibility;
