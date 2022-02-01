@@ -55,6 +55,7 @@ const ServicesDemo: NextPage = () => {
   const [committed, setCommitted] = useState<Array<Array<constants.TileType>>>(
     []
   );
+  const [remains, setRemains] = useState(getInitialTiles());
 
   const handleAddTile = useCallback(
     (tile: constants.TileType) => {
@@ -135,11 +136,29 @@ const ServicesDemo: NextPage = () => {
             ],
           },
           {
-            name: "Feasibility",
+            name: "Game play",
             options: [
               {
+                name: "Generate Random game",
+                call: () => {
+                  // reset game
+                  const game = getInitialGame();
+
+                  // get remains (from player 0 perspective)
+                  // as far as his concern, there are tiles out on the wall
+                  // and on players' hand, anything not on his hand / onTable
+                  // are remains
+                  let remains = [...game.walls];
+                  for (let idx = 1; idx < 4; idx++)
+                    remains = [...remains, ...game.players[idx].onHands];
+                  setRemains(remains);
+                  setTiles(game.players[0].onHands);
+                  console.log(game);
+                },
+              },
+              {
                 name: "Feasibility",
-                call: () => getFeasibility(tiles, committed, getInitialTiles()),
+                call: () => getFeasibility(tiles, committed, remains),
               },
             ],
           },
