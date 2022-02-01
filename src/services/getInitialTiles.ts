@@ -5,7 +5,6 @@ import {
   Dragon,
   Wind,
   Flower,
-  Season,
   TileType,
 } from "../constants";
 
@@ -72,14 +71,14 @@ const getInitialTiles = (isRandom = true): Array<TileType> => {
   });
 
   [
-    Flower.East,
-    Flower.South,
-    Flower.West,
-    Flower.North,
-    Season.East,
-    Season.South,
-    Season.West,
-    Season.North,
+    Flower.Spring,
+    Flower.Summer,
+    Flower.Autumn,
+    Flower.Winter,
+    Flower.Plum,
+    Flower.Orchid,
+    Flower.Chrysanthemum,
+    Flower.Bamboo,
   ].map((itm) => set.push(itm));
 
   return isRandom ? shuffle(set) : set;
