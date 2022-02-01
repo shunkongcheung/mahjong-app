@@ -26,8 +26,15 @@ const getThirteenOrphansFeasibility = (
   ];
 
   const difficulty = 0.3;
+  const maxCount = 1;
 
-  return getSpecificTileSetFeasibility(iOnHands, remains, tileSet, difficulty);
+  return getSpecificTileSetFeasibility(
+    iOnHands,
+    remains,
+    tileSet,
+    difficulty,
+    maxCount
+  );
 };
 
 export default getThirteenOrphansFeasibility;
