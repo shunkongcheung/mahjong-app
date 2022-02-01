@@ -4,16 +4,47 @@ import getIsTileValidCombination from "./getIsTileValidCombination";
 import getIsSuited from "./getIsSuited";
 
 const getOneMixSuitScore = (
-  tiles: Array<constants.TileType>
+  tiles: Array<constants.TileType>,
+  committed: Array<Array<constants.TileType>>
 ): constants.ScoreTuple => {
+  let suitName = "";
+  let isMixed = false;
+
+  // check all committed are valid
+  const isCommittedValid = committed.reduce((acc, iTiles) => {
+    if (!acc) return false;
+    const tiles = [...iTiles].sort();
+
+    // check if its a valid tile
+    const isValid = getIsTileValidCombination(tiles, true);
+
+    // get current committed tile's suit
+    const currSuitName = tiles[0].split(".")[0];
+
+    // check if there is a suit to this tiles
+    const isSuit = getIsSuited(tiles[0]);
+
+    // if it is not suit, it is mixed
+    if (!isSuit) isMixed = true;
+
+    // if no suitName is set yet, update suit name
+    if (isSuit && !suitName) suitName = currSuitName;
+
+    // if this tile has a suit, but doesnt match existing suit
+    // then it cant be a one suit / mix suit
+    if (isSuit && currSuitName !== suitName) return false;
+
+    return isValid;
+  }, true);
+  if (!isCommittedValid) return [0, ""];
+
   const iCopy = [...tiles].sort();
 
   // must contain at least one suit to be all one suit / mixed suit
   if (!getIsSuited(tiles[0])) return [0, ""];
 
   // check if it is one suit / mixed suit. if not return false
-  let isMixed = false;
-  const suitName = iCopy[0].split(".")[0];
+  if (!suitName) suitName = iCopy[0].split(".")[0];
   for (let idx = 0; idx < iCopy.length; idx++) {
     const currSuit = iCopy[idx].split(".")[0];
     const isNotSameSuit = currSuit !== suitName;
