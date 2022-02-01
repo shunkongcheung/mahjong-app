@@ -49,17 +49,14 @@ export enum Dragon {
 }
 
 export enum Flower {
-  East = "flower.1",
-  South = "flower.2",
-  West = "flower.3",
-  North = "flower.4",
-}
-
-export enum Season {
-  East = "season.5",
-  South = "season.6",
-  West = "season.7",
-  North = "season.8",
+  Spring = "flower.1",
+  Summer = "flower.2",
+  Autumn = "flower.3",
+  Winter = "flower.4",
+  Plum = "flower.5",
+  Orchid = "flower.6",
+  Chrysanthemum = "flower.7",
+  Bamboo = "flower.8",
 }
 
 export type TileType =
@@ -75,15 +72,14 @@ export type TileType =
 export interface Player {
   isStarter: boolean;
   flowers: Array<Flower | Season>;
-  onHand: Array<TileType>;
+  onHands: Array<TileType>;
   committed: Array<Array<TileType>>;
 }
 
 export interface Game {
   wind: Wind;
-  turn: Player;
   players: Array<Player>;
-  remaining: Array<TileType>;
+  walls: Array<TileType>;
   onTable: Array<TileType>;
 }
 
