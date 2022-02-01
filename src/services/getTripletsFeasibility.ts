@@ -2,7 +2,8 @@ import { TileType } from "../constants";
 
 const getTripletsFeasibility = (
   iOnHands: Array<TileType>,
-  committed: Array<Array<TileType>>
+  committed: Array<Array<TileType>>,
+  remains: Array<TileType>
 ) => {
   // check if any chow is committed, if yes, it is totally in feasible
   const isCommittedChow = committed.reduce((acc, iTiles) => {
@@ -39,7 +40,23 @@ const getTripletsFeasibility = (
     }
 
     // add to feasibilty
-    if (jdx != idx + 1) feasibility += jdx - idx;
+    if (jdx === idx + 1) continue;
+
+    const diff = jdx - idx;
+    let isCountable = diff > 2;
+
+    // if a triplet is not formed, check if there is remainning out there
+    if (!isCountable) {
+      const count = remains.reduce(
+        (acc, tile) => acc + (tile === onHands[idx] ? 1 : 0),
+        0
+      );
+
+      // if there is remain, a triplet can be formed
+      isCountable = count > 1;
+    }
+
+    if (isCountable) feasibility += diff;
 
     // increment
     idx = jdx;

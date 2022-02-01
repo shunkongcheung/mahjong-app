@@ -3,11 +3,11 @@ import getTripletsFeasibility from "./getTripletsFeasibility";
 
 const getFeasibility = (
   onHands: Array<TileType>,
-  committed: Array<Array<TileType>>
+  committed: Array<Array<TileType>>,
+  remains: Array<TileType>
 ) => {
-  return {
-    triplets: getTripletsFeasibility(onHands, committed),
-  };
+  const triplets = getTripletsFeasibility(onHands, committed, remains);
+  return { triplets };
 };
 
 export default getFeasibility;
