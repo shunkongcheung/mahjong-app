@@ -1,4 +1,5 @@
 import { Bamboo, Character, Dot, Dragon, Wind, TileType } from "../constants";
+import getSpecificTileSetFeasibility from "./getSpecificTileSetFeasibility";
 
 const getThirteenOrphansFeasibility = (
   iOnHands: Array<TileType>,
@@ -24,21 +25,14 @@ const getThirteenOrphansFeasibility = (
     Wind.North,
   ].sort();
 
-  const feasibility = thirteenOrphansSet.reduce((acc, tile) => {
-    if (acc === -100) return acc;
+  const getTileFromRemainsDifficulty = 0.3;
 
-    const found = !!iOnHands.find((itm) => itm === tile);
-    if (found) return acc + 1;
-
-    // maximum should have 4 out there in the remain
-    const remainCount = remains.reduce(
-      (acc, itm) => acc + (itm === tile ? 1 : 0),
-      0
-    );
-    return acc + 0.5 * (remainCount / 4);
-  }, 0);
-
-  return feasibility;
+  return getSpecificTileSetFeasibility(
+    iOnHands,
+    remains,
+    thirteenOrphansSet,
+    getTileFromRemainsDifficulty
+  );
 };
 
 export default getThirteenOrphansFeasibility;
