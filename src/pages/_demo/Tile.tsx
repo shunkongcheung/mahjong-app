@@ -46,14 +46,14 @@ const TileDemo: NextPage = () => {
         <Tile type={constants.Bamboo.Nine} width={70} />
       </Row>
       <Row>
-        <Tile type={constants.Season.East} width={70} />
-        <Tile type={constants.Season.South} width={70} />
-        <Tile type={constants.Season.West} width={70} />
-        <Tile type={constants.Season.North} width={70} />
-        <Tile type={constants.Flower.East} width={70} />
-        <Tile type={constants.Flower.South} width={70} />
-        <Tile type={constants.Flower.West} width={70} />
-        <Tile type={constants.Flower.North} width={70} />
+        <Tile type={constants.Flower.Spring} width={70} />
+        <Tile type={constants.Flower.Summer} width={70} />
+        <Tile type={constants.Flower.Autumn} width={70} />
+        <Tile type={constants.Flower.Winter} width={70} />
+        <Tile type={constants.Flower.Plum} width={70} />
+        <Tile type={constants.Flower.Orchid} width={70} />
+        <Tile type={constants.Flower.Chrysanthemum} width={70} />
+        <Tile type={constants.Flower.Bamboo} width={70} />
       </Row>
 
       <Row>
