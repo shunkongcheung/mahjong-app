@@ -42,8 +42,6 @@ const Tile: React.FC<TileProps> = ({ width, type }) => {
         return 2;
       case "flower":
         return 3;
-      case "season":
-        return 3;
       case "dragon":
         return 4;
       case "wind":
