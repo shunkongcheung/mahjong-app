@@ -32,7 +32,8 @@ const getSpecialScoreHelper = (
 };
 
 const getTileScore = (
-  tiles: Array<TileType>,
+  onHand: Array<TileType>,
+  committed: Array<Array<TileType>>,
   winds: Array<Wind>
 ): Array<ScoreTuple> => {
   const checkers = [
@@ -45,7 +46,12 @@ const getTileScore = (
     getWindTilesScore,
   ];
 
-  const hands = checkers.map((checker) => checker(tiles));
+  const hands = checkers.map((checker) => checker(onHand, committed));
+
+  // get full set of tiles
+  let tiles = [...onHand];
+  committed.map((commmittedTiles) => (tiles = [...tiles, ...commmittedTiles]));
+  tiles.sort();
 
   // add dragons
   const dragons = Object.values(Dragon);
