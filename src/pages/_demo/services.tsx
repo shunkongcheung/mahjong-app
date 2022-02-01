@@ -4,7 +4,12 @@ import styled from "styled-components";
 
 import { Tile } from "../../components";
 import * as constants from "../../constants";
-import { getInitialGame, getInitialTiles, getTileScore } from "../../services";
+import {
+  getFeasibility,
+  getInitialGame,
+  getInitialTiles,
+  getTileScore,
+} from "../../services";
 
 interface DemoSetProps {
   set: Array<{
@@ -126,6 +131,15 @@ const ServicesDemo: NextPage = () => {
                     constants.Wind.East,
                     constants.Wind.West,
                   ]),
+              },
+            ],
+          },
+          {
+            name: "Feasibility",
+            options: [
+              {
+                name: "Feasibility",
+                call: () => getFeasibility(tiles, committed),
               },
             ],
           },
