@@ -139,7 +139,7 @@ const ServicesDemo: NextPage = () => {
             options: [
               {
                 name: "Feasibility",
-                call: () => getFeasibility(tiles, committed),
+                call: () => getFeasibility(tiles, committed, getInitialTiles()),
               },
             ],
           },
