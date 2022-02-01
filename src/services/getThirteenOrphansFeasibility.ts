@@ -9,7 +9,7 @@ const getThirteenOrphansFeasibility = (
   // check if any committed, cant play thirteen orphans if committed
   if (committed.length) return -100;
 
-  const thirteenOrphansSet = [
+  const tileSet = [
     Bamboo.One,
     Bamboo.Nine,
     Character.One,
@@ -25,14 +25,9 @@ const getThirteenOrphansFeasibility = (
     Wind.North,
   ];
 
-  const getTileFromRemainsDifficulty = 0.3;
+  const difficulty = 0.3;
 
-  return getSpecificTileSetFeasibility(
-    iOnHands,
-    remains,
-    thirteenOrphansSet,
-    getTileFromRemainsDifficulty
-  );
+  return getSpecificTileSetFeasibility(iOnHands, remains, tileSet, difficulty);
 };
 
 export default getThirteenOrphansFeasibility;
