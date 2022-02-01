@@ -40,23 +40,24 @@ const getTripletsFeasibility = (
     }
 
     // add to feasibilty
-    if (jdx === idx + 1) continue;
-
     const diff = jdx - idx;
-    let isCountable = diff > 2;
 
-    // if a triplet is not formed, check if there is remainning out there
-    if (!isCountable) {
-      const count = remains.reduce(
-        (acc, tile) => acc + (tile === onHands[idx] ? 1 : 0),
-        0
-      );
+    if (diff !== 1) {
+      let isCountable = diff > 2;
 
-      // if there is remain, a triplet can be formed
-      isCountable = count > 1;
+      // if a triplet is not formed, check if there is remainning out there
+      if (!isCountable) {
+        const count = remains.reduce(
+          (acc, tile) => acc + (tile === onHands[idx] ? 1 : 0),
+          0
+        );
+
+        // if there is remain, a triplet can be formed
+        isCountable = count > 0;
+      }
+
+      if (isCountable) feasibility += diff;
     }
-
-    if (isCountable) feasibility += diff;
 
     // increment
     idx = jdx;
