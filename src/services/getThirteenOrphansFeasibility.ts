@@ -25,7 +25,7 @@ const getThirteenOrphansFeasibility = (
     Wind.North,
   ];
 
-  const difficulty = 0.3;
+  const difficulty = 0.25;
   const maxCount = 1;
 
   return getSpecificTileSetFeasibility(
