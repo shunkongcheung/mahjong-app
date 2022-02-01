@@ -15,7 +15,7 @@ const getSpecificTileSetFeasibility = (
       0
     );
 
-    acc += Math.max(count, maxCountPerTile);
+    acc += Math.min(count, maxCountPerTile);
 
     // maximum should have 4 out there in the remain
     const remainCount = remains.reduce(
