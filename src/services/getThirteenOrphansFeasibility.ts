@@ -23,7 +23,7 @@ const getThirteenOrphansFeasibility = (
     Wind.South,
     Wind.West,
     Wind.North,
-  ].sort();
+  ];
 
   const getTileFromRemainsDifficulty = 0.3;
 
