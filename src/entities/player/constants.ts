@@ -1,3 +1,4 @@
+import { Game } from "../game/constants";
 import { Flower, GameEventAction, TileType, Wind } from "../../constants";
 
 export interface Player {
@@ -11,8 +12,12 @@ export interface Player {
   committed: Array<Array<TileType>>;
 
   // function that define user decisions
-  shouldTakeCombo(player: Player, tiles: Array<TileType>): Promise<boolean>;
-  toThrowTile(player: Player): Promise<TileType>;
+  shouldTakeCombo(
+    player: Player,
+    game: Game,
+    tiles: Array<TileType>
+  ): Promise<boolean>;
+  toThrowTile(player: Player, game: Game): Promise<TileType>;
 }
 
 export interface TakeTileResult {
