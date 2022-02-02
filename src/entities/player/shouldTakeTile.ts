@@ -1,4 +1,5 @@
 import { GameEventAction, TileType } from "../../constants";
+import { Game } from "../game";
 import { Player, TakeTileResult } from "./constants";
 
 const getPossibleTriplet = (
@@ -52,6 +53,7 @@ const getPossibleChows = (
 // play the game
 const shouldTakeTile = async (
   player: Player,
+  game: Game,
   tile: TileType,
   isChowable: boolean
 ): Promise<TakeTileResult> => {
@@ -74,7 +76,7 @@ const shouldTakeTile = async (
 
   const want = await Promise.all(
     possibleCombo.map(async (result) =>
-      player.shouldTakeCombo(player, result.tiles)
+      player.shouldTakeCombo(player, game, result.tiles)
     )
   );
 
