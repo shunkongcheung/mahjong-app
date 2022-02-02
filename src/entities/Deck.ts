@@ -1,26 +1,15 @@
 import { TileType } from "../constants";
-import { getInitialTiles } from "../services";
 
-class Deck {
-  private _deck: Array<TileType>;
+type Deck = Array<TileType>;
 
-  constructor(isRandom = true) {
-    this._deck = getInitialTiles(isRandom);
-  }
+export const obtain = (deck: Deck, count = 1, skip = 0): Deck => {
+  const obtained = deck.splice(skip, count);
+  return obtained;
+};
 
-  get length(): number {
-    return this._deck.length;
-  }
-
-  obtain(count = 1, skip = 0): Array<TileType> {
-    const obtained = this._deck.splice(skip, count);
-    return obtained;
-  }
-
-  compensate(): TileType {
-    // from flower / from Kongs
-    return this._deck.pop() as TileType;
-  }
-}
+export const compensate = (deck: Deck): TileType => {
+  const compensate = deck.pop() as TileType;
+  return compensate;
+};
 
 export default Deck;
