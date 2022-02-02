@@ -59,19 +59,12 @@ export enum Flower {
   Bamboo = "flower.8",
 }
 
-export type TileType =
-  | Bamboo
-  | Character
-  | Dot
-  | Wind
-  | Dragon
-  | Flower
-  | Season;
+export type TileType = Bamboo | Character | Dot | Wind | Dragon | Flower;
 
 // game status
 export interface Player {
   isStarter: boolean;
-  flowers: Array<Flower | Season>;
+  flowers: Array<Flower>;
   onHands: Array<TileType>;
   committed: Array<Array<TileType>>;
 }
@@ -120,3 +113,9 @@ export const ConditionScore: Score = {
   Dragon: [1, "番子"],
   Wind: [1, "風"],
 };
+
+export interface GameEvent {
+  playerIdx: number;
+  tile: TileType | "";
+  action: "chow" | "triplet" | "kong" | "win" | "pop" | "flower" | "pick";
+}
