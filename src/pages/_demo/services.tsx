@@ -4,12 +4,7 @@ import styled from "styled-components";
 
 import { Tile } from "../../components";
 import * as constants from "../../constants";
-import {
-  getFeasibility,
-  getInitialGame,
-  getInitialTiles,
-  getTileScore,
-} from "../../services";
+import { getFeasibility, getInitialTiles, getTileScore } from "../../services";
 
 interface DemoSetProps {
   set: Array<{
@@ -114,15 +109,6 @@ const ServicesDemo: NextPage = () => {
             ],
           },
           {
-            name: "Game State",
-            options: [
-              {
-                name: "initial game",
-                call: () => getInitialGame(),
-              },
-            ],
-          },
-          {
             name: "Tile Score",
             options: [
               {
@@ -132,29 +118,6 @@ const ServicesDemo: NextPage = () => {
                     constants.Wind.East,
                     constants.Wind.West,
                   ]),
-              },
-            ],
-          },
-          {
-            name: "Game play",
-            options: [
-              {
-                name: "Generate Random game",
-                call: () => {
-                  // reset game
-                  const game = getInitialGame();
-
-                  // get remains (from player 0 perspective)
-                  // as far as his concern, there are tiles out on the wall
-                  // and on players' hand, anything not on his hand / onTable
-                  // are remains
-                  let remains = [...game.walls];
-                  for (let idx = 1; idx < 4; idx++)
-                    remains = [...remains, ...game.players[idx].onHands];
-                  setRemains(remains);
-                  setTiles(game.players[0].onHands);
-                  console.log(game);
-                },
               },
               {
                 name: "Feasibility",
