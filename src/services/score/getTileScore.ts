@@ -5,7 +5,7 @@ import {
   TileScore,
   TileType,
   Wind,
-} from "../constants";
+} from "../../constants";
 
 import getAllInTripetsScore from "./getAllInTripetsScore";
 import getCommonHandScore from "./getCommanHandScore";

@@ -1,5 +1,5 @@
-import { Dragon, Wind, TileType } from "../constants";
-import getIsSuited from "./getIsSuited";
+import { Dragon, Wind, TileType } from "../../constants";
+import getIsSuited from "../getIsSuited";
 import getSpecificTileSetFeasibility from "./getSpecificTileSetFeasibility";
 
 const getAllHonorTilesFeasibility = (

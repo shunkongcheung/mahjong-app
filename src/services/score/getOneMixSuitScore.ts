@@ -1,7 +1,7 @@
-import * as constants from "../constants";
+import * as constants from "../../constants";
 
-import getIsTileValidCombination from "./getIsTileValidCombination";
-import getIsSuited from "./getIsSuited";
+import getIsTileValidCombination from "../getIsTileValidCombination";
+import getIsSuited from "../getIsSuited";
 
 const getOneMixSuitScore = (
   tiles: Array<constants.TileType>,

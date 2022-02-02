@@ -1,6 +1,5 @@
-import getFeasibility from "./getFeasibility";
+import getFeasibility from "./feasibility/getFeasibility";
 import getI18N from "./getI18N";
-import getInitialTiles from "./getInitialTiles";
-import getTileScore from "./getTileScore";
+import getTileScore from "./score/getTileScore";
 
-export { getFeasibility, getI18N, getInitialTiles, getTileScore };
+export { getFeasibility, getI18N, getTileScore };

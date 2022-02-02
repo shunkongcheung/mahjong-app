@@ -1,4 +1,11 @@
-import { Bamboo, Character, Dot, Dragon, Wind, TileType } from "../constants";
+import {
+  Bamboo,
+  Character,
+  Dot,
+  Dragon,
+  Wind,
+  TileType,
+} from "../../constants";
 import getSpecificTileSetFeasibility from "./getSpecificTileSetFeasibility";
 
 const getThirteenOrphansFeasibility = (

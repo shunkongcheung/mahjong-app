@@ -1,6 +1,6 @@
-import * as constants from "../constants";
+import * as constants from "../../constants";
 
-import getIsSuited from "./getIsSuited";
+import getIsSuited from "../getIsSuited";
 
 const getAllInTripetsScore = (
   tiles: Array<constants.TileType>,

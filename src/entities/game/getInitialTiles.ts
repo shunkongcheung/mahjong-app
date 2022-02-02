@@ -6,7 +6,7 @@ import {
   Wind,
   Flower,
   TileType,
-} from "../constants";
+} from "../../constants";
 
 function shuffle<T>(array: Array<T>) {
   let currentIndex = array.length;

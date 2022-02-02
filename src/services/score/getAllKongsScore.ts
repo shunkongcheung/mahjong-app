@@ -1,4 +1,4 @@
-import { ScoreTuple, TileScore, TileType } from "../constants";
+import { ScoreTuple, TileScore, TileType } from "../../constants";
 
 const getAllKongsScore = (
   tiles: Array<TileType>,

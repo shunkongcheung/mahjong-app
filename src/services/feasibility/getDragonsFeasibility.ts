@@ -1,4 +1,4 @@
-import { Dragon, TileType } from "../constants";
+import { Dragon, TileType } from "../../constants";
 import getSpecificTileSetFeasibility from "./getSpecificTileSetFeasibility";
 
 const getDragonsFeasibility = (

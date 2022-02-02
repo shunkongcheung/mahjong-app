@@ -4,7 +4,8 @@ import styled from "styled-components";
 
 import { Tile } from "../../components";
 import * as constants from "../../constants";
-import { getFeasibility, getInitialTiles, getTileScore } from "../../services";
+import getInitialTiles from "../../entities/game/getInitialTiles";
+import { getFeasibility, getTileScore } from "../../services";
 
 interface DemoSetProps {
   set: Array<{
@@ -50,7 +51,6 @@ const ServicesDemo: NextPage = () => {
   const [committed, setCommitted] = useState<Array<Array<constants.TileType>>>(
     []
   );
-  const [remains, setRemains] = useState(getInitialTiles());
 
   const handleAddTile = useCallback(
     (tile: constants.TileType) => {
@@ -121,7 +121,7 @@ const ServicesDemo: NextPage = () => {
               },
               {
                 name: "Feasibility",
-                call: () => getFeasibility(tiles, committed, remains),
+                call: () => getFeasibility(tiles, committed, []),
               },
             ],
           },

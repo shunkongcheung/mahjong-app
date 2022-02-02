@@ -5,13 +5,14 @@ import styled from "styled-components";
 import { Tile } from "../../components";
 import { GameEvent, TileType } from "../../constants";
 
-import Game, {
+import {
+  Game,
   distribute,
   regenerate,
   getNewGame,
   play,
-} from "../../entities/Game";
-import Player from "../../entities/Player";
+} from "../../entities/game";
+import { Player } from "../../entities/player";
 import { getI18N } from "../../services";
 
 const Button = styled.button`

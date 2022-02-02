@@ -1,4 +1,4 @@
-import { TileType } from "../constants";
+import { TileType } from "../../constants";
 
 import getAllHonorTilesFeasibility from "./getAllHonorTilesFeasibility";
 import getDragonsFeasibility from "./getDragonsFeasibility";

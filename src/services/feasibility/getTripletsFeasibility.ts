@@ -1,4 +1,4 @@
-import { TileType } from "../constants";
+import { TileType } from "../../constants";
 
 const getTripletsFeasibility = (
   iOnHands: Array<TileType>,

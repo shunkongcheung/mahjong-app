@@ -1,11 +1,11 @@
-import * as constants from "../constants";
+import * as constants from "../../constants";
 
 const getThirteenOrphansScore = (
   tiles: Array<constants.TileType>,
   committed: Array<Array<constants.TileType>>
 ): constants.ScoreTuple => {
   // cant have any committed to form thirteen orphans
-  if(committed.length > 0) return [0, ""];
+  if (committed.length > 0) return [0, ""];
 
   const copy = [...tiles].sort();
 

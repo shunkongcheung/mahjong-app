@@ -1,5 +1,5 @@
-import * as constants from "../constants";
-import getIsTileValidCombination from "./getIsTileValidCombination";
+import * as constants from "../../constants";
+import getIsTileValidCombination from "../getIsTileValidCombination";
 
 const getDragonTilesScore = (
   tiles: Array<constants.TileType>,

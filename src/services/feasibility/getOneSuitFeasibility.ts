@@ -1,4 +1,4 @@
-import { Bamboo, Character, Dot, TileType } from "../constants";
+import { Bamboo, Character, Dot, TileType } from "../../constants";
 import getSpecificTileSetFeasibility from "./getSpecificTileSetFeasibility";
 
 // if its empty string, it is checking for AllHonors
