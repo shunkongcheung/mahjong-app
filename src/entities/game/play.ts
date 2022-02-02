@@ -24,7 +24,7 @@ const play = async (game: Game): Promise<Array<GameEvent>> => {
   const player = game.players[game.currIndex];
 
   // ask him to throw a tile
-  const tile = await popTile(player);
+  const tile = await popTile(player, game);
   events.push({ action: GameEventAction.Pop, tile, playerIdx: game.currIndex });
 
   // check if anyone wants the tile
@@ -34,6 +34,7 @@ const play = async (game: Game): Promise<Array<GameEvent>> => {
         ? { action: GameEventAction.NoAction, tiles: [] }
         : shouldTakeTile(
             player,
+            game,
             tile,
             idx === (game.currIndex + 1) % PLAYER_COUNT
           )
