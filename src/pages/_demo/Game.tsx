@@ -13,6 +13,7 @@ import {
   play,
 } from "../../entities/game";
 import getMachine from "../../entities/machine";
+import shouldTakeCombo from "../../entities/machine/shouldTakeCombo";
 import { Player } from "../../entities/player";
 import { getI18N } from "../../services";
 
@@ -59,6 +60,8 @@ const Section = styled.div<{ width: number }>`
 `;
 
 const defaultPlayers = [getMachine(), getMachine(), getMachine(), getMachine()];
+
+const STORAGE_NAME = "game-storage";
 
 const getCopy = (_game: Game) => {
   const game = JSON.parse(JSON.stringify(_game)) as Game;
@@ -115,34 +118,85 @@ const GameDemo: NextPage = () => {
   const [game, setGame] = useState<Game>(getNewGame(defaultPlayers as any));
   const [events, setEvents] = useState<Array<GameEvent>>([]);
 
-  const newGame = useCallback(() => {
-    const _game = getNewGame(defaultPlayers as any);
-    const copy = getCopy(_game);
+  const load = useCallback(() => {
+    const _game = JSON.parse(localStorage.getItem(STORAGE_NAME) as string);
 
-    distribute(copy);
-    setGame(copy);
-    setEvents([]);
+    const { events, ...game } = _game as any;
+
+    game.players.map((player: Player) => {
+      player.toThrowTile = defaultPlayers[0].toThrowTile;
+      player.shouldTakeCombo = defaultPlayers[0].shouldTakeCombo;
+    });
+    setGame(game);
+    setEvents(events);
   }, [setEvents, setGame]);
 
-  const newRound = useCallback(() => {
-    const copy = getCopy(game);
-    regenerate(copy);
-    distribute(copy);
-    setGame(copy);
-    setEvents([]);
-  }, [game, setEvents, setGame]);
+  const save = useCallback((game: Game, events: Array<GameEvent>) => {
+    const prevVal = localStorage.getItem(STORAGE_NAME);
+
+    localStorage.setItem(STORAGE_NAME, JSON.stringify({ ...game, events }));
+    if (!prevVal) return;
+
+    const prevName = `${STORAGE_NAME}_${new Date().toISOString()}`;
+    localStorage.setItem(prevName, prevVal);
+
+    let prevKeys: Array<string> = [];
+    for (let idx = 0; idx < localStorage.length; idx++) {
+      const currKey = localStorage.key(idx);
+      if (
+        currKey &&
+        currKey.startsWith(STORAGE_NAME) &&
+        currKey !== STORAGE_NAME
+      )
+        prevKeys.push(currKey);
+    }
+    if (prevKeys.length > 5) {
+      prevKeys.sort();
+      for (let idx = 0; idx < prevKeys.length - 5; idx++)
+        localStorage.removeItem(prevKeys[0]);
+    }
+  }, []);
 
   const move = useCallback(async () => {
     const copy = getCopy(game);
     const events = await play(copy);
     setGame(copy);
     events.reverse();
-    setEvents((o) => [...events, ...o]);
-  }, [game, setEvents, setGame]);
+    setEvents((o) => {
+      const nEvents = [...events, ...o];
+      save(copy, nEvents);
+      return nEvents;
+    });
+  }, [game, setEvents, save, setGame]);
+
+  const newGame = useCallback(() => {
+    const _game = getNewGame(defaultPlayers as any);
+    const copy = getCopy(_game);
+
+    distribute(copy);
+    save(copy, []);
+    setGame(copy);
+    setEvents([]);
+  }, [setEvents, save, setGame]);
+
+  const newRound = useCallback(() => {
+    const copy = getCopy(game);
+    regenerate(copy);
+    distribute(copy);
+    save(copy, []);
+    setGame(copy);
+    setEvents([]);
+  }, [game, setEvents, save, setGame]);
 
   useEffect(() => {
     newGame();
   }, [newGame]);
+
+  useEffect(() => {
+    if (game.winnerIdx !== -1) {
+      console.log(game);
+    }
+  }, [game]);
 
   return (
     <Container>
@@ -151,6 +205,8 @@ const GameDemo: NextPage = () => {
           <Button onClick={newGame}>New Game</Button>
           <Button onClick={newRound}>New Round</Button>
           <Button onClick={move}>move</Button>
+          <Button onClick={() => save(game, events)}>save</Button>
+          <Button onClick={load}>load</Button>
         </Row>
         <Row>
           <InfoItem>
