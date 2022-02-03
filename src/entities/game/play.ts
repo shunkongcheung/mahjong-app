@@ -73,7 +73,7 @@ const play = async (
     if (winner) game.running = false;
   }
 
-  if (!game.running) return [];
+  if (!game.running) return [{ action: GameEvent }];
 
   // ask him to throw a tile
   const tile = await popTile(player, game);
@@ -159,11 +159,6 @@ const play = async (
           ConditionScore.RobbingKong,
         ]);
       }
-    }
-
-    // game is done
-    if (highestAction === GameEventAction.Win) {
-      game.running = false;
     }
 
     events.push({ action: highestAction, tile, playerIdx: game.currIndex });
