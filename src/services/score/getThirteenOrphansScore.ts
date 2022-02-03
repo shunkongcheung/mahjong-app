@@ -12,8 +12,8 @@ const getThirteenOrphansScore = (
   // check if all of the following has at least one in hand
   const thirteen = [
     constants.Bamboo.One,
-    constants.Bamboo.One,
-    constants.Character.Nine,
+    constants.Bamboo.Nine,
+    constants.Character.One,
     constants.Character.Nine,
     constants.Dot.One,
     constants.Dot.Nine,
