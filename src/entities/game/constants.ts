@@ -1,4 +1,4 @@
-import { TileType, Wind } from "../../constants";
+import { ScoreTuple, TileType, Wind } from "../../constants";
 
 import { Player } from "../player";
 
@@ -16,4 +16,6 @@ export interface Game {
   brookerIndex: number;
   currIndex: number;
   running: boolean;
+  winnerIdx: number;
+  winnerScores: Array<ScoreTuple>;
 }
