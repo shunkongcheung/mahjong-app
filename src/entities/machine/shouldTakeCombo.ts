@@ -13,7 +13,7 @@ const shouldTakeCombo = async (
   game: Game,
   tile: TileType,
   combo: Array<TileType>
-) => {
+): Promise<[boolean, number]> => {
   const remains = getRemains(_player, game);
   const player = getPlayerCopy(_player);
 
@@ -28,11 +28,9 @@ const shouldTakeCombo = async (
   // new feasibility
   const feas = getFeasibility(player.onHands, player.committed, remains);
 
-  console.log("shdTake", player.gameWinds[1], bestBet, tile, { oldFeas, feas });
-
   // @ts-ignore
   const newValue = feas[bestBet[0]];
-  return newValue > bestBet[1];
+  return [newValue > bestBet[1], Math.max(newValue, bestBet[1])];
 };
 
 export default shouldTakeCombo;
