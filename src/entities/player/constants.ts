@@ -15,6 +15,7 @@ export interface Player {
   shouldTakeCombo(
     player: Player,
     game: Game,
+    tile: TileType,
     tiles: Array<TileType>
   ): Promise<boolean>;
   toThrowTile(player: Player, game: Game): Promise<TileType>;
