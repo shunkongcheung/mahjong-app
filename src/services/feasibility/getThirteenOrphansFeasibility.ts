@@ -33,14 +33,12 @@ const getThirteenOrphansFeasibility = (
     Wind.North,
   ];
 
-  const maxCount = 1;
-
   return getSpecificTileSetFeasibility(
     iOnHands,
     remains,
     tileSet,
     Difficulty.ThirteenOrphans,
-    maxCount
+    [1, 0.5, 0, 0]
   );
 };
 
