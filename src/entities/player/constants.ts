@@ -17,7 +17,7 @@ export interface Player {
     game: Game,
     tile: TileType,
     tiles: Array<TileType>
-  ): Promise<boolean>;
+  ): Promise<[boolean, number]>;
   toThrowTile(player: Player, game: Game): Promise<TileType>;
 }
 

@@ -80,8 +80,12 @@ const shouldTakeTile = async (
     )
   );
 
+  let [wantIdx, wantScore] = [-1, -1];
   for (let idx = 0; idx < want.length; idx++)
-    if (want[idx]) return possibleCombo[idx];
+    if (!!want[idx][0] && want[idx][1] > wantScore)
+      [wantIdx, wantScore] = [idx, want[idx][1]];
+
+  if (wantIdx >= 0) return possibleCombo[wantIdx];
 
   return { action: GameEventAction.NoAction, tiles: [] };
 };
