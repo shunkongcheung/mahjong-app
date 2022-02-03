@@ -100,7 +100,6 @@ export const ConditionScore: Score = {
 };
 
 export enum GameEventAction {
-  Win = "gameEvent.7.win",
   Kong = "gameEvent.6.kong",
   Triplet = "gameEvent.5.triplet",
   Chow = "gameEvent.4.chow",
