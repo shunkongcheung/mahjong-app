@@ -1,4 +1,11 @@
-import { Bamboo, Character, Dot, TileType } from "../../constants";
+import {
+  Bamboo,
+  Character,
+  Dot,
+  Dragon,
+  Wind,
+  TileType,
+} from "../../constants";
 import { Difficulty } from "./constants";
 import getSpecificTileSetFeasibility from "./getSpecificTileSetFeasibility";
 
@@ -31,18 +38,27 @@ const getOneSuitFeasibility = (
     iOnHands,
     remains,
     tileSet,
+    Difficulty.OneSuit
+  );
+
+  let honorScore = getSpecificTileSetFeasibility(
+    iOnHands,
+    remains,
+    [...Object.values(Dragon), ...Object.values(Wind)],
     Difficulty.AllHonorTiles
   );
+  honorScore /= 2;
 
   // get all tiles that is in the wanted suit
   const suitTiles = iOnHands.filter((itm) => tileSet.includes(itm));
 
   // look for pairs
-  const pairScore = tileSet.reduce(
+  let pairScore = tileSet.reduce(
     (acc, curr) =>
       acc + (suitTiles.filter((itm) => itm === curr).length > 1 ? 1 : 0),
     0
   );
+  pairScore /= 9;
 
   // check for continuity, the more continuous, the easier to get a chow
   const continuousSets: Array<Array<TileType>> = [[]];
@@ -62,13 +78,27 @@ const getOneSuitFeasibility = (
     else continuousSets.push([tile]);
   });
   // the more continuous set, the more sparse, the worse
-  const continuityScore = continuousSets.length * -1;
+  let continuityScore = continuousSets.length;
+  for (let idx = 1; idx < continuousSets.length; idx++) {
+    const prevLast = continuousSets[idx - 1][continuousSets.length - 1];
+    const currFirst = continuousSets[idx][0];
+
+    if (!currFirst || !prevLast) continue;
+
+    const diff =
+      Number(currFirst.split(".")[1]) - Number(prevLast.split(".")[1]);
+    continuityScore += diff;
+  }
+  continuityScore /= -4;
 
   // pairScore and continuityScore is divided based on the fact that there are nine tiles in one suit
   // these two score should not affect comparision between one suit probablity to
   // other tiles combination (e.g. triplets, all honor etc)
   // it should only affect on choosing which chow combination to take
-  return countScore + pairScore / 9 + continuityScore / 4;
+  //
+  // honor tile can help form mix suit, so they are added by half
+  const result = countScore + pairScore + continuityScore + honorScore;
+  return result;
 };
 
 export default getOneSuitFeasibility;
