@@ -37,6 +37,9 @@ const checkWinner = (
   );
   const total = scores.reduce((acc, score) => acc + score[0], 0);
   if (total > MIN_SCORE) {
+    // TODO:
+    // maybe ask user if he wants to win with this tile
+
     game.running = false;
     game.winnerIdx = playerIdx;
     game.winnerScores = scores;
@@ -59,7 +62,7 @@ const play = async (
   // still have to pop a tile
   if (!game.walls.length) {
     checkWinner(game, player, game.currIndex, [
-      ConditionScore.WindByLastCatch,
+      ConditionScore.WinByLastCatch,
       ConditionScore.SelfPick,
     ]);
     game.running = false;
@@ -73,21 +76,25 @@ const play = async (
     if (winner) game.running = false;
   }
 
-  if (!game.running) return [{ action: GameEvent }];
+  // TODO:
+  // check for kongs
+  // and do the same thing to check for winner and stuff
+
+  if (!game.running) return [];
 
   // ask him to throw a tile
   const tile = await popTile(player, game);
   events.push({ action: GameEventAction.Pop, tile, playerIdx: game.currIndex });
 
   // check if anyone would win from this tile
-  for (let idx = 0; idx < 4; idx++) {
-    if (idx === game.currIndex) continue;
-    const player = game.players[idx];
+  for (let idx = game.currIndex; idx < game.currIndex + PLAYER_COUNT; idx++) {
+    const playerIdx = idx % PLAYER_COUNT;
+    const player = game.players[playerIdx];
     const onHands = [...player.onHands, tile];
     const winner = checkWinner(
       game,
       { ...player, onHands },
-      game.currIndex,
+      playerIdx,
       isFirstRound ? [ConditionScore.Earth] : []
     );
 
@@ -150,12 +157,16 @@ const play = async (
       pickTiles(takenPlayer, compensate(game.walls));
 
       // check for robbing kong
-      for (let idx = 0; idx < 4; idx++) {
-        if (idx === game.currIndex) continue;
+      for (
+        let idx = game.currIndex;
+        idx < game.currIndex + PLAYER_COUNT;
+        idx++
+      ) {
+        const playerIdx = idx % PLAYER_COUNT;
 
-        const player = game.players[idx];
+        const player = game.players[playerIdx];
         const onHands = [...player.onHands, tile];
-        checkWinner(game, { ...player, onHands }, game.currIndex, [
+        checkWinner(game, { ...player, onHands }, playerIdx, [
           ConditionScore.RobbingKong,
         ]);
       }
@@ -191,11 +202,11 @@ const play = async (
         game.currIndex,
         flowerRound > 1
           ? [
-              ConditionScore.WindByKong,
-              ConditionScore.WindByDoubleKong,
+              ConditionScore.WinByKong,
+              ConditionScore.WinByDoubleKong,
               ConditionScore.SelfPick,
             ]
-          : [ConditionScore.WindByKong, ConditionScore.SelfPick]
+          : [ConditionScore.WinByKong, ConditionScore.SelfPick]
       );
     }
   }
