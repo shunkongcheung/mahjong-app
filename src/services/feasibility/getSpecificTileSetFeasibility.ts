@@ -5,7 +5,7 @@ const getSpecificTileSetFeasibility = (
   remains: Array<TileType>,
   tileSet: Array<TileType>, // difficulty to retrieve from remains
   difficulty: number,
-  maxCountPerTile = 4
+  counter = [1, 1, 1, 1]
 ) => {
   const feasibility = tileSet.reduce((acc, tile) => {
     if (acc === -100) return acc;
@@ -15,7 +15,7 @@ const getSpecificTileSetFeasibility = (
       0
     );
 
-    acc += Math.min(count, maxCountPerTile);
+    for (let idx = 0; idx < count; idx++) acc += counter[idx];
 
     // maximum should have 4 out there in the remain
     const remainCount = remains.reduce(
