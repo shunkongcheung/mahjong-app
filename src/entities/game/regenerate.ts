@@ -10,6 +10,8 @@ const regenerate = (game: Game) => {
   // restart game state
   game.currIndex = 0;
   game.running = true;
+  game.winnerIdx = -1;
+  game.winnerScores = [];
 
   // reorder players
   const first = game.players.splice(0, 1);

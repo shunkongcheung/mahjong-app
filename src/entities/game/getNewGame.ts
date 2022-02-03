@@ -29,6 +29,8 @@ const getNewGame = (players: Players): Game => {
     brookerIndex: 0,
     currIndex: 0,
     running: true,
+    winnerIdx: -1,
+    winnerScores: [],
   };
 };
 
