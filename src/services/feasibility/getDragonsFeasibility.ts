@@ -1,4 +1,5 @@
 import { Dragon, TileType } from "../../constants";
+import { Difficulty } from "./constants";
 import getSpecificTileSetFeasibility from "./getSpecificTileSetFeasibility";
 
 const getDragonsFeasibility = (
@@ -16,9 +17,12 @@ const getDragonsFeasibility = (
 
   if (nonDragonsCommittedCount > 2) return -100;
 
-  const difficulty = 0.5;
-
-  return getSpecificTileSetFeasibility(iOnHands, remains, tileSet, difficulty);
+  return getSpecificTileSetFeasibility(
+    iOnHands,
+    remains,
+    tileSet,
+    Difficulty.Dragons
+  );
 };
 
 export default getDragonsFeasibility;
