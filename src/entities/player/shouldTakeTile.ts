@@ -76,7 +76,7 @@ const shouldTakeTile = async (
 
   const want = await Promise.all(
     possibleCombo.map(async (result) =>
-      player.shouldTakeCombo(player, game, result.tiles)
+      player.shouldTakeCombo(player, game, tile, result.tiles)
     )
   );
 
