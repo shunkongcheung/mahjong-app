@@ -1,4 +1,5 @@
 import { TileType } from "../constants";
+import getIsSuited from "./getIsSuited";
 
 const getIsTileValidCombination = (
   tiles: Array<TileType>,
@@ -32,6 +33,9 @@ const getIsTileValidCombination = (
     copy.splice(0, 4);
     if (getIsTileValidCombination(copy)) return true;
   }
+
+  // if its not suit, can only form triplets / kongs
+  if (!getIsSuited(curr)) return false;
 
   // try forming chow
   const [currSuit, currIdx] = curr.split(".");
