@@ -6,11 +6,25 @@ import getOneSuitFeasibility from "./getOneSuitFeasibility";
 import getThirteenOrphansFeasibility from "./getThirteenOrphansFeasibility";
 import getTripletsFeasibility from "./getTripletsFeasibility";
 
+interface Result {
+  allHonorTiles: number;
+  bamboo: number;
+  character: number;
+  dot: number;
+  dragonTiles: number;
+  thirteenOrphans: number;
+  triplets: number;
+}
+
+type ResultKey = keyof Result;
+
 const getFeasibility = (
   onHands: Array<TileType>,
   committed: Array<Array<TileType>>,
   remains: Array<TileType>
 ) => {
+  const committedScore = committed.length * 3 * 1.5;
+
   const allHonorTiles = getAllHonorTilesFeasibility(
     onHands,
     committed,
@@ -33,7 +47,7 @@ const getFeasibility = (
   );
   const triplets = getTripletsFeasibility(onHands, committed, remains);
 
-  return {
+  const result = {
     allHonorTiles,
     bamboo,
     character,
@@ -42,6 +56,13 @@ const getFeasibility = (
     thirteenOrphans,
     triplets,
   };
+
+  // score should be better for committedScore
+  Object.keys(result).map(
+    (key) => (result[key as ResultKey] += committedScore)
+  );
+
+  return result;
 };
 
 export default getFeasibility;

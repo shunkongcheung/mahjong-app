@@ -1,5 +1,7 @@
 import { Dragon, Wind, TileType } from "../../constants";
 import getIsSuited from "../getIsSuited";
+
+import { Difficulty } from "./constants";
 import getSpecificTileSetFeasibility from "./getSpecificTileSetFeasibility";
 
 const getAllHonorTilesFeasibility = (
@@ -24,9 +26,12 @@ const getAllHonorTilesFeasibility = (
     Wind.North,
   ];
 
-  const difficulty = 0.5;
-
-  return getSpecificTileSetFeasibility(iOnHands, remains, tileSet, difficulty);
+  return getSpecificTileSetFeasibility(
+    iOnHands,
+    remains,
+    tileSet,
+    Difficulty.AllHonorTiles
+  );
 };
 
 export default getAllHonorTilesFeasibility;

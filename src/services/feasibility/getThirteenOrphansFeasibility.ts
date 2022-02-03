@@ -6,6 +6,7 @@ import {
   Wind,
   TileType,
 } from "../../constants";
+import { Difficulty } from "./constants";
 import getSpecificTileSetFeasibility from "./getSpecificTileSetFeasibility";
 
 const getThirteenOrphansFeasibility = (
@@ -32,14 +33,13 @@ const getThirteenOrphansFeasibility = (
     Wind.North,
   ];
 
-  const difficulty = 0.25;
   const maxCount = 1;
 
   return getSpecificTileSetFeasibility(
     iOnHands,
     remains,
     tileSet,
-    difficulty,
+    Difficulty.ThirteenOrphans,
     maxCount
   );
 };
