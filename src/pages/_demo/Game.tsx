@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { Tile } from "../../components";
-import { GameEvent, TileType } from "../../constants";
+import { GameEvent } from "../../constants";
 
 import {
   Game,
@@ -12,6 +12,7 @@ import {
   getNewGame,
   play,
 } from "../../entities/game";
+import getMachine from "../../entities/machine";
 import { Player } from "../../entities/player";
 import { getI18N } from "../../services";
 
@@ -57,23 +58,7 @@ const Section = styled.div<{ width: number }>`
   height: 100%;
 `;
 
-const getPlayer = (): Player => ({
-  gameWinds: [],
-  gameFlowers: [],
-
-  flowers: [],
-  onHands: [],
-  committed: [],
-
-  async shouldTakeCombo(_: Player, __: Array<TileType>) {
-    return true;
-  },
-  async toThrowTile(player: Player) {
-    return player.onHands[0];
-  },
-});
-
-const defaultPlayers = [getPlayer(), getPlayer(), getPlayer(), getPlayer()];
+const defaultPlayers = [getMachine(), getMachine(), getMachine(), getMachine()];
 
 const getCopy = (_game: Game) => {
   const game = JSON.parse(JSON.stringify(_game)) as Game;
