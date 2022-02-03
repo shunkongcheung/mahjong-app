@@ -17,7 +17,7 @@ const getThirteenOrphansFeasibility = (
   // check if any committed, cant play thirteen orphans if committed
   if (committed.length) return -100;
 
-  const tileSet = [
+  const tileSet: Array<TileType> = [
     Bamboo.One,
     Bamboo.Nine,
     Character.One,
@@ -33,12 +33,24 @@ const getThirteenOrphansFeasibility = (
     Wind.North,
   ];
 
+  // check if any of the tile above has none left
+  const isDead = tileSet.reduce((acc, tile) => {
+    if (acc) return true;
+
+    const isOnHand = iOnHands.findIndex((itm) => itm === tile) >= 0;
+    const isRemains = remains.findIndex((itm) => itm === tile) >= 0;
+
+    return !isOnHand && !isRemains;
+  }, false);
+
+  if (isDead) return -100;
+
   return getSpecificTileSetFeasibility(
     iOnHands,
     remains,
     tileSet,
     Difficulty.ThirteenOrphans,
-    [1, 0.5, 0, 0]
+    [0.8, 0.4, 0, 0]
   );
 };
 
