@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import styled from "styled-components";
 
-import { Tile } from "../../components";
+import { Button, Tile } from "../../components";
 import { GameEvent } from "../../constants";
 
 import {
@@ -22,23 +22,6 @@ import {
   getMachine,
   play,
 } from "../../services";
-
-const Button = styled.button`
-  background: ${({ theme }) => theme.colors.primary[400]};
-  border: 0;
-  border-radius: 5px;
-  color: white;
-  padding: 5px 10px;
-  margin-right: 10px;
-
-  transition: background 0.2s linear;
-
-  &:hover {
-    cursor: pointer;
-    background: ${({ theme }) => theme.colors.primary[500]};
-    outline: 2px solid ${({ theme }) => theme.colors.primary[200]};
-  }
-`;
 
 const Container = styled.div`
   display: flex;
