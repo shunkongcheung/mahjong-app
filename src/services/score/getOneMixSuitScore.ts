@@ -74,10 +74,15 @@ const getOneMixSuitScore = (
     }
 
     // check if it is successful
-    if (getIsTileValidCombination(copy))
+    // console.log(
+    //   "eye: begin --------------------------------------------------------- "
+    // );
+    if (getIsTileValidCombination(copy)) {
+      // console.log("eye: finish", toRemove, copy);
       return isMixed
         ? constants.TileScore.MixedOneSuit
         : constants.TileScore.AllOneSuit;
+    }
   }
 
   // tried all eyes and still failed
