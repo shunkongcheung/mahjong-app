@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
-import { TileType } from "../constants";
+import { TileType } from "./constants";
 
 interface TileProps {
   type: TileType;
