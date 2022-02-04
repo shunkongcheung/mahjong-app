@@ -43,7 +43,6 @@ const mapping: { [x: string]: string } = {
   [constants.Flower.Orchid]: "花（蘭)",
   [constants.Flower.Chrysanthemum]: "花（菊)",
   [constants.Flower.Bamboo]: "花（竹)",
-  [constants.GameEventAction.Win]: "食",
   [constants.GameEventAction.Kong]: "降",
   [constants.GameEventAction.Triplet]: "碰",
   [constants.GameEventAction.Chow]: "上",
