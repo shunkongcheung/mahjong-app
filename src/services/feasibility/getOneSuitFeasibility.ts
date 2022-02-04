@@ -6,6 +6,7 @@ import {
   Wind,
   TileType,
 } from "../../constants";
+import getIsSuited from "../getIsSuited";
 import { Difficulty } from "./constants";
 import getSpecificTileSetFeasibility from "./getSpecificTileSetFeasibility";
 
@@ -23,7 +24,7 @@ const getOneSuitFeasibility = (
     if (acc) return true;
 
     // otherwise, check if committed starts with the required suit
-    return !iTiles[0].startsWith(suit);
+    return !iTiles[0].startsWith(suit) && getIsSuited(iTiles[0]);
   }, false);
 
   if (isCommittedOtherSuit) return -100;
@@ -34,6 +35,7 @@ const getOneSuitFeasibility = (
   if (suit === "dot") tileSet = Object.values(Dot);
   tileSet.sort();
 
+  // suit tiles. core of the total
   const countScore = getSpecificTileSetFeasibility(
     iOnHands,
     remains,
@@ -41,18 +43,26 @@ const getOneSuitFeasibility = (
     Difficulty.OneSuit
   );
 
+  // honor tile is less useful than suit tiles
+  const honors = [...Object.values(Dragon), ...Object.values(Wind)];
   let honorScore = getSpecificTileSetFeasibility(
     iOnHands,
     remains,
-    [...Object.values(Dragon), ...Object.values(Wind)],
+    honors,
     Difficulty.AllHonorTiles
   );
-  honorScore /= 2;
+  honorScore /= 4;
+  const honorPairCount = honors.reduce(
+    (acc, curr) =>
+      acc + (iOnHands.filter((itm) => itm === curr).length > 1 ? 1 : 0),
+    0
+  );
+  honorScore = honorScore / 9 + honorPairCount;
 
   // get all tiles that is in the wanted suit
   const suitTiles = iOnHands.filter((itm) => tileSet.includes(itm));
 
-  // look for pairs
+  // look for pairs. minority scoring
   let pairScore = tileSet.reduce(
     (acc, curr) =>
       acc + (suitTiles.filter((itm) => itm === curr).length > 1 ? 1 : 0),
@@ -61,6 +71,7 @@ const getOneSuitFeasibility = (
   pairScore /= 9;
 
   // check for continuity, the more continuous, the easier to get a chow
+  // again, its minority scoring
   const continuousSets: Array<Array<TileType>> = [[]];
   tileSet.map((tile) => {
     const tileIdx = suitTiles.findIndex((itm) => itm === tile);
@@ -89,7 +100,7 @@ const getOneSuitFeasibility = (
       Number(currFirst.split(".")[1]) - Number(prevLast.split(".")[1]);
     continuityScore += diff;
   }
-  continuityScore /= -4;
+  continuityScore /= -9;
 
   // pairScore and continuityScore is divided based on the fact that there are nine tiles in one suit
   // these two score should not affect comparision between one suit probablity to
@@ -98,6 +109,10 @@ const getOneSuitFeasibility = (
   //
   // honor tile can help form mix suit, so they are added by half
   const result = countScore + pairScore + continuityScore + honorScore;
+
+  // if (suit === "dot")
+  //   console.log({ result, countScore, pairScore, continuityScore, honorScore });
+
   return result;
 };
 
