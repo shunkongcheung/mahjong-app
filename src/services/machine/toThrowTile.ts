@@ -1,5 +1,5 @@
 import { Player } from "../player";
-import { getFeasibility } from "../../services";
+import getFeasibility from "../feasibility";
 import { Game } from "../game";
 
 import getRemains from "./getRemains";

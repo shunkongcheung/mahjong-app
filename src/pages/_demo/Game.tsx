@@ -13,15 +13,15 @@ import { GameEvent } from "../../constants";
 
 import {
   Game,
+  Player,
+  PLAYER_COUNT,
   distribute,
   regenerate,
+  getI18N,
   getNewGame,
+  getMachine,
   play,
-} from "../../entities/game";
-import { PLAYER_COUNT } from "../../entities/game/constants";
-import getMachine from "../../entities/machine";
-import { Player } from "../../entities/player";
-import { getI18N } from "../../services";
+} from "../../services";
 
 const Button = styled.button`
   background: ${({ theme }) => theme.colors.primary[400]};

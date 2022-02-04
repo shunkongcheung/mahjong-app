@@ -7,7 +7,7 @@ import {
   Flower,
   TileType,
 } from "../../constants";
-import { shuffle } from "../../services";
+import shuffle from "../shuffle";
 
 const getInitialTiles = (isRandom = true): Array<TileType> => {
   const gameSet = [

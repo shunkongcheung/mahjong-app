@@ -1,7 +1,7 @@
 import { formCommit, pickTiles, Player } from "../player";
 
 import { TileType } from "../../constants";
-import { getFeasibility } from "../../services";
+import getFeasibility from "../feasibility";
 import { Game } from "../game";
 
 import getBestBet from "./getBestBet";

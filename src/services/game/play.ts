@@ -18,7 +18,7 @@ import checkFlowers from "./checkFlowers";
 import compensate from "./compensate";
 import obtain from "./obtain";
 import { Game, PLAYER_COUNT } from "./constants";
-import { getTileScore } from "../../services";
+import getTileScore from "../score";
 
 const MIN_SCORE = 3;
 

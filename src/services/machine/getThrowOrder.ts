@@ -1,6 +1,6 @@
 import { Bamboo, Character, Dot, TileType } from "../../constants";
-import { shuffle } from "../../services";
-import getIsSuited from "../../services/getIsSuited";
+import shuffle from "../shuffle";
+import getIsSuited from "../getIsSuited";
 
 const bamboos: Array<TileType> = Object.values(Bamboo);
 const characters: Array<TileType> = Object.values(Character);
