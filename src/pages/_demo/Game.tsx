@@ -1,5 +1,11 @@
 import { NextPage } from "next";
-import React, { useCallback, useEffect, useState } from "react";
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import styled from "styled-components";
 
 import { Tile } from "../../components";
@@ -12,8 +18,8 @@ import {
   getNewGame,
   play,
 } from "../../entities/game";
+import { PLAYER_COUNT } from "../../entities/game/constants";
 import getMachine from "../../entities/machine";
-import shouldTakeCombo from "../../entities/machine/shouldTakeCombo";
 import { Player } from "../../entities/player";
 import { getI18N } from "../../services";
 
@@ -198,6 +204,24 @@ const GameDemo: NextPage = () => {
     }
   }, [game]);
 
+  const renderedPlayerRow = useMemo(() => {
+    let rows: Array<ReactNode> = [];
+    for (
+      let idx = game.brookerIndex;
+      idx < game.brookerIndex + PLAYER_COUNT;
+      idx++
+    ) {
+      const playerIdx = idx % PLAYER_COUNT;
+      rows.push(
+        <PlayerRow
+          key={`PlayerRow-${playerIdx}`}
+          {...game.players[playerIdx]}
+        />
+      );
+    }
+    return rows;
+  }, [game]);
+
   return (
     <Container>
       <Section width={70}>
@@ -215,9 +239,7 @@ const GameDemo: NextPage = () => {
           </InfoItem>
           <InfoItem>尚餘牌數: {game.walls.length}</InfoItem>
         </Row>
-        {game.players.map((player, idx) => (
-          <PlayerRow key={`PlayerRow-${idx}`} {...player} />
-        ))}
+        {renderedPlayerRow}
       </Section>
       <Section width={30}>
         {events.map((event, idx) => (

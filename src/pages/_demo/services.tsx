@@ -47,10 +47,21 @@ const DemoSet: React.FC<DemoSetProps> = ({ set }) => (
 );
 
 const ServicesDemo: NextPage = () => {
-  const [tiles, setTiles] = useState<Array<constants.TileType>>([]);
-  const [committed, setCommitted] = useState<Array<Array<constants.TileType>>>(
-    []
-  );
+  const [tiles, setTiles] = useState<Array<constants.TileType>>([
+    constants.Dot.One,
+    constants.Dot.Two,
+    constants.Dot.Four,
+    constants.Dot.Four,
+    constants.Dot.Five,
+    constants.Dot.Six,
+    constants.Dot.Seven,
+    constants.Dot.Eight,
+    constants.Dot.Eight,
+    constants.Dot.Eight,
+  ]);
+  const [committed, setCommitted] = useState<Array<Array<constants.TileType>>>([
+    [constants.Dragon.Green, constants.Dragon.Green, constants.Dragon.Green],
+  ]);
 
   const handleAddTile = useCallback(
     (tile: constants.TileType) => {
@@ -114,10 +125,13 @@ const ServicesDemo: NextPage = () => {
               {
                 name: "Score",
                 call: () =>
-                  getTileScore(tiles, committed, [
-                    constants.Wind.East,
-                    constants.Wind.West,
-                  ]),
+                  getTileScore(
+                    tiles,
+                    committed,
+                    [],
+                    [constants.Wind.East, constants.Wind.East],
+                    [constants.ConditionScore.SelfPick]
+                  ),
               },
               {
                 name: "Feasibility",
