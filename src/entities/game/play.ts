@@ -3,6 +3,7 @@ import {
   GameEvent,
   GameEventAction,
   ScoreTuple,
+  TileType,
 } from "../../constants";
 import {
   formCommit,
@@ -48,6 +49,44 @@ const checkWinner = (
   return false;
 };
 
+const compensateProcedure = (game: Game, events: Array<GameEvent>) => {
+  // check if currentIndex player (after increment)
+  // has flowers after:
+  // 1. obtaining normally from wall
+  // 2. got a compensate from Kong
+  let hasFlower = true;
+  let flowerRound = 0;
+  while (hasFlower) {
+    const flowers = checkFlowers(game, game.currIndex);
+    hasFlower = flowers.length > 0;
+    if (hasFlower) {
+      flowers.map((tile) =>
+        events.push({
+          action: GameEventAction.Flower,
+          tile,
+          playerIdx: game.currIndex,
+        })
+      );
+      flowerRound++;
+
+      // check for winning by kong
+      const player = game.players[game.currIndex];
+      checkWinner(
+        game,
+        player,
+        game.currIndex,
+        flowerRound > 1
+          ? [
+              ConditionScore.WinByKong,
+              ConditionScore.WinByDoubleKong,
+              ConditionScore.SelfPick,
+            ]
+          : [ConditionScore.WinByKong, ConditionScore.SelfPick]
+      );
+    }
+  }
+};
+
 const play = async (
   game: Game,
   isFirstRound?: boolean
@@ -76,11 +115,56 @@ const play = async (
     if (winner) game.running = false;
   }
 
-  // TODO:
   // check for kongs
   // and do the same thing to check for winner and stuff
+  let playerKongTile: TileType | "" = "";
+  let playerUniqueSet = player.onHands.filter(
+    (itm, idx) => player.onHands.indexOf(itm) === idx
+  );
+  for (let idx = 0; idx < playerUniqueSet.length && !playerKongTile; idx++) {
+    const tile = playerUniqueSet[idx];
+
+    const hasFour = player.onHands.filter((itm) => itm === tile).length === 4;
+    const tripletExists =
+      player.committed.filter((itm) => itm[0] === tile && itm[1] === tile)
+        .length > 0;
+
+    if (hasFour || tripletExists) {
+      // check if user wants to kong this tile
+      const kong = [tile, tile, tile, tile];
+      const take = await player.shouldTakeCombo(player, game, tile, kong);
+      if (take) {
+        formCommit(player, kong);
+        playerKongTile = tile;
+        events.push({
+          action: GameEventAction.Kong,
+          tile,
+          playerIdx: game.currIndex,
+        });
+      }
+    }
+  }
+
+  if (!!playerKongTile) {
+    // check for robbing kong
+    for (let idx = game.currIndex; idx < game.currIndex + PLAYER_COUNT; idx++) {
+      const playerIdx = idx % PLAYER_COUNT;
+
+      const player = game.players[playerIdx];
+      const onHands = [...player.onHands, playerKongTile];
+      checkWinner(game, { ...player, onHands }, playerIdx, [
+        ConditionScore.RobbingKong,
+      ]);
+    }
+    // compensate
+    pickTiles(player, compensate(game.walls));
+  }
 
   if (!game.running) return [];
+
+  if (!!playerKongTile) {
+    compensateProcedure(game, events);
+  }
 
   // ask him to throw a tile
   const tile = await popTile(player, game);
@@ -153,9 +237,6 @@ const play = async (
 
     // compensate for this player if its Kong
     if (highestAction === GameEventAction.Kong) {
-      // compensate
-      pickTiles(takenPlayer, compensate(game.walls));
-
       // check for robbing kong
       for (
         let idx = game.currIndex;
@@ -170,47 +251,14 @@ const play = async (
           ConditionScore.RobbingKong,
         ]);
       }
+      // compensate
+      pickTiles(takenPlayer, compensate(game.walls));
     }
 
     events.push({ action: highestAction, tile, playerIdx: game.currIndex });
   }
 
-  // check if currentIndex player (after increment)
-  // has flowers after:
-  // 1. obtaining normally from wall
-  // 2. got a compensate from Kong
-  let hasFlower = true;
-  let flowerRound = 0;
-  while (hasFlower) {
-    const flowers = checkFlowers(game, game.currIndex);
-    hasFlower = flowers.length > 0;
-    if (hasFlower) {
-      flowers.map((tile) =>
-        events.push({
-          action: GameEventAction.Flower,
-          tile,
-          playerIdx: game.currIndex,
-        })
-      );
-      flowerRound++;
-
-      // check for winning by kong
-      const player = game.players[game.currIndex];
-      checkWinner(
-        game,
-        player,
-        game.currIndex,
-        flowerRound > 1
-          ? [
-              ConditionScore.WinByKong,
-              ConditionScore.WinByDoubleKong,
-              ConditionScore.SelfPick,
-            ]
-          : [ConditionScore.WinByKong, ConditionScore.SelfPick]
-      );
-    }
-  }
-
+  compensateProcedure(game, events);
   return events;
 };
 
