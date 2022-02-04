@@ -30,6 +30,13 @@ const shouldTakeCombo = async (
 
   // @ts-ignore
   const newValue = feas[bestBet[0]];
+
+  console.log("take", _player.gameWinds[1], [bestBet[0], newValue], {
+    oldFeas,
+    feas,
+    bestBet,
+  });
+
   return [newValue > bestBet[1], Math.max(newValue, bestBet[1])];
 };
 
