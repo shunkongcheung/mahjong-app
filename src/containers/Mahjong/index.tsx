@@ -5,6 +5,7 @@ import { Button } from "../../components";
 
 import EventItem from "./EventItem";
 import PlayerRow from "./PlayerRow";
+import WinnerInfo from "./WinnerInfo";
 import { getI18N, PLAYER_COUNT } from "./services";
 import useMahjong from "./useMahjong";
 
@@ -46,12 +47,14 @@ const Row = styled.div`
 `;
 
 const EventList = styled.ul`
-  list-decoration: none;
+  list-style: none;
   padding: 0;
+  overflow-y: auto;
+  height: 100%;
 `;
 
 const Mahjong: React.FC = () => {
-  const { game, events, move, newGame, newRound } = useMahjong();
+  const { game, events, move, newRound } = useMahjong();
 
   const renderedPlayerRow = useMemo(() => {
     let rows: Array<ReactNode> = [];
@@ -85,15 +88,21 @@ const Mahjong: React.FC = () => {
             {getI18N(game.players[game.brookerIndex].gameWinds[1])}局
           </InfoItem>
           <InfoItem>尚餘牌數: {game.walls.length}</InfoItem>
-          <CtrlBtn onClick={newGame} varient="normal">
-            重啟
-          </CtrlBtn>
-          <CtrlBtn onClick={newRound} varient="normal">
-            過莊
-          </CtrlBtn>
-          <CtrlBtn onClick={move} varient="normal">
-            下一步
-          </CtrlBtn>
+          {game.running ? (
+            <CtrlBtn onClick={move} varient="normal">
+              下一步
+            </CtrlBtn>
+          ) : (
+            <>
+              <CtrlBtn onClick={newRound} varient="normal">
+                下一局
+              </CtrlBtn>
+              <WinnerInfo
+                playerIdx={game.winnerIdx}
+                winnerScores={game.winnerScores}
+              />
+            </>
+          )}
           <EventList>
             {events.map((event, idx) => (
               <EventItem key={`EventItem-${idx}`} {...event} />
