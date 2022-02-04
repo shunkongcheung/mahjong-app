@@ -17,22 +17,24 @@ const Container = styled.button<{ varient: Varient }>`
   border-radius: 5px;
   color: white;
   background: ${theme.colors.primary[400]};
+  transition: background 0.2s linear;
   `
       : `
   outline: 1px solid ${theme.colors.primary[400]};
   background: white;
   color: ${theme.colors.primary[400]};
+  transition: color 0.2s linear;
   `}
 
   padding: 5px 10px;
-  margin-right: 10px;
-
-  transition: background 0.2s linear;
 
   &:hover {
     cursor: pointer;
     background: ${({ theme, varient }) =>
       varient === "primary" && theme.colors.primary[500]};
+
+    color: ${({ theme, varient }) =>
+      varient === "normal" && theme.colors.primary[700]};
     outline: 2px solid ${({ theme }) => theme.colors.primary[200]};
   }
 `;
