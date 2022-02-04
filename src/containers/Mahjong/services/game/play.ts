@@ -147,7 +147,11 @@ const play = async (
 
   if (!!playerKongTile) {
     // check for robbing kong
-    for (let idx = game.currIndex; idx < game.currIndex + PLAYER_COUNT; idx++) {
+    for (
+      let idx = game.currIndex + 1;
+      idx < game.currIndex + PLAYER_COUNT;
+      idx++
+    ) {
       const playerIdx = idx % PLAYER_COUNT;
 
       const player = game.players[playerIdx];
@@ -171,7 +175,11 @@ const play = async (
   events.push({ action: GameEventAction.Pop, tile, playerIdx: game.currIndex });
 
   // check if anyone would win from this tile
-  for (let idx = game.currIndex; idx < game.currIndex + PLAYER_COUNT; idx++) {
+  for (
+    let idx = game.currIndex + 1;
+    idx < game.currIndex + PLAYER_COUNT;
+    idx++
+  ) {
     const playerIdx = idx % PLAYER_COUNT;
     const player = game.players[playerIdx];
     const onHands = [...player.onHands, tile];
@@ -239,7 +247,7 @@ const play = async (
     if (highestAction === GameEventAction.Kong) {
       // check for robbing kong
       for (
-        let idx = game.currIndex;
+        let idx = game.currIndex + 1;
         idx < game.currIndex + PLAYER_COUNT;
         idx++
       ) {
