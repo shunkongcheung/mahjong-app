@@ -86,8 +86,16 @@ const GameEventRow: React.FC<GameEvent> = ({ playerIdx, tile, action }) => (
   </Row>
 );
 
-const PlayerRow: React.FC<Player> = ({ onHands, flowers, committed }) => (
+const PlayerRow: React.FC<Player & { isCurrIndex: boolean }> = ({
+  isCurrIndex,
+  onHands,
+  flowers,
+  committed,
+}) => (
   <Row>
+    <div style={{ display: "flex", alignItems: "center" }}>
+      {isCurrIndex && <>&#9824;</>}
+    </div>
     <Row isSimple>
       {onHands.map((tile, idx) => (
         <Tile
@@ -214,6 +222,7 @@ const GameDemo: NextPage = () => {
       const playerIdx = idx % PLAYER_COUNT;
       rows.push(
         <PlayerRow
+          isCurrIndex={playerIdx === game.currIndex}
           key={`PlayerRow-${playerIdx}`}
           {...game.players[playerIdx]}
         />
@@ -240,6 +249,11 @@ const GameDemo: NextPage = () => {
           <InfoItem>尚餘牌數: {game.walls.length}</InfoItem>
         </Row>
         {renderedPlayerRow}
+        <Row isSimple>
+          {[...game.onTable].reverse().map(({ tile }, idx) => (
+            <Tile key={`OnTableTile-${idx}-${tile}`} type={tile} width={30} />
+          ))}
+        </Row>
       </Section>
       <Section width={30}>
         {events.map((event, idx) => (
