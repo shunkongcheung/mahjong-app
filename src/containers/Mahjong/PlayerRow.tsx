@@ -41,7 +41,7 @@ const OnTableContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-const ON_TABLE_TILE_WIDTH = 25;
+const ON_TABLE_TILE_WIDTH = 15;
 const ON_HAND_TILE_WIDTH = 30;
 
 const PlayerRow: React.FC<PlayerRowProps> = ({
