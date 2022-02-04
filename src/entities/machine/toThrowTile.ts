@@ -37,6 +37,10 @@ const toThrowTile = async (_player: Player, game: Game) => {
       currBestScore = newFeas;
       currBestTile = tile;
     }
+    // console.log("throw", _player.gameWinds[1], tile, newFeas, {
+    //   tileIdx,
+    //   feas,
+    // });
   }
 
   console.log("throw", _player.gameWinds[1], curBest, currBestTile, {
