@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-import { Tile } from "../../components";
-
+import Tile from "./Tile";
 import { TileType } from "./constants";
 import { Player } from "./services";
 
